@@ -27,7 +27,7 @@ public class UserController {
             UserEntity savedUser = userService.saveUser(userEntity);
 
             // Başarılı cevap dön
-            return ResponseEntity.ok("Kullanıcı başarıyla kayıt oldu: " + savedUser);
+            return ResponseEntity.ok("Kullanıcı başarıyla kayıt oldu: ");
 
         } catch (Exception e) {
             // Hata cevabı dön

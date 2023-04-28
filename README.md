@@ -20,6 +20,7 @@ To install and run your API, use the following commands:
 
 - mvn clean install
 - mvn spring-boot:run
+- Due to permission issues, the files folder in C should be created like C:/files/ 
 
 ## Functions and Usage
 
@@ -37,6 +38,7 @@ Note: To access file operations, you need to add Bearer JWT token to the authori
 
 ## Documentation
 
-You can access the Swagger documentation of your API from the following URL:
+You can access your API's Swagger documentation and postman collection information from the URLs below.
 
 - http://{host}:8080/api-docs/swagger-ui/index.html#/
+- src/test/resources/ETSTUR_FILE_API.postman_collection.json
