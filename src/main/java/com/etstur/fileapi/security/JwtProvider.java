@@ -1,6 +1,6 @@
 package com.etstur.fileapi.security;
 
-import com.etstur.fileapi.config.SecurityConstants;
+import com.etstur.fileapi.common.SecurityConstants;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

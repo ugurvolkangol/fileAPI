@@ -1,4 +1,4 @@
-package com.etstur.fileapi.config;
+package com.etstur.fileapi.common;
 
 public class SecurityConstants {
     public static final String TOKEN_PREFIX = "Bearer ";
