@@ -2,6 +2,18 @@
 
 FileAPI is an API that allows us to perform file storage, update and list operations.
 
+## Tech Stack 
+
++ Java11
++ Spring Boot
++ Spring Security and JWT
++ Spring Data JPA
++ Spring Actuator
++ Lombok
++ H2 DB 
++ Open API Swagger
++ Maven
+
 ## Installation and Running
 
 To install and run your API, use the following commands:
