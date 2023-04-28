@@ -1,5 +1,6 @@
 package com.etstur.fileapi.security;
 
+import com.etstur.fileapi.exception.InvalidTokenException;
 import com.etstur.fileapi.service.UserService;
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 // JWT filtresi sınıfı
 @Component
@@ -24,18 +26,16 @@ public class JwtFilter extends OncePerRequestFilter {
   // Kullanıcı servisi bağımlılığı
   @Autowired private UserService userService;
 
+  @Autowired private HandlerExceptionResolver handlerExceptionResolver;
+
   // Her istek için filtreleme yapmak için bir metod (Spring Security tarafından çağrılır)
   @Override
   protected void doFilterInternal(
       HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
-    if (request.getServletPath().equals("/users/register")
-        || request.getRequestURI().startsWith("/api-docs")) {
-      filterChain.doFilter(request, response);
-    } else {
-      // İstekten JWT tokenini al
-      String token = jwtProvider.getTokenFromRequest(request);
-
+    // İstekten JWT tokenini al
+    String token = jwtProvider.getTokenFromRequest(request);
+    try {
       // Token geçerli ise kullanıcının kimliğini doğrula
       if (token != null && jwtProvider.validateToken(token)) {
         // Token içindeki kullanıcı adını al
@@ -50,9 +50,13 @@ public class JwtFilter extends OncePerRequestFilter {
                 userDetails, null, userDetails.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        // Filtre zincirine devam et
       }
-      // Filtre zincirine devam et
-      filterChain.doFilter(request, response);
+    } catch (InvalidTokenException e) {
+      // Token geçersiz ise buraya girer
+      handlerExceptionResolver.resolveException(request, response, null, e);
+      return;
     }
+    filterChain.doFilter(request, response);
   }
 }

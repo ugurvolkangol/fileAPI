@@ -1,9 +1,8 @@
 package com.etstur.fileapi.security;
 
 import com.etstur.fileapi.common.SecurityConstants;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.etstur.fileapi.exception.InvalidTokenException;
+import io.jsonwebtoken.*;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -44,14 +43,25 @@ public class JwtProvider {
     }
 
     // Bir JWT tokeninin geçerliliğini kontrol etmek için bir metod
-    public boolean validateToken(String token) {
+    public boolean validateToken(String token) throws InvalidTokenException {
         try {
-            // Tokeni ayrıştır ve hata olmazsa geçerlidir
             Jwts.parser().setSigningKey(SecurityConstants.TOKEN_SECRET).parseClaimsJws(token);
             return true;
-        } catch (JwtException | IllegalArgumentException e) {
-            // Hata olursa geçersizdir
-            return false;
+        } catch (SignatureException e) {
+            // token imzası geçersiz ise buraya girer
+            throw new InvalidTokenException("Token imzası geçersiz");
+        } catch (MalformedJwtException e) {
+            // token yapısı bozuk ise buraya girer
+            throw new InvalidTokenException("Token yapısı bozuk");
+        } catch (ExpiredJwtException e) {
+            // token süresi dolmuş ise buraya girer
+            throw new InvalidTokenException("Token süresi dolmuş");
+        } catch (UnsupportedJwtException e) {
+            // token desteklenmeyen bir tip ise buraya girer
+            throw new InvalidTokenException("Token desteklenmeyen bir tip");
+        } catch (IllegalArgumentException e) {
+            // token bilgileri boş ise buraya girer
+            throw new InvalidTokenException("Token bilgileri boş");
         }
     }
 
