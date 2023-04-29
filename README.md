@@ -25,7 +25,7 @@ To use this API, you can follow the steps below:
 4. Run the project using `mvn spring-boot:run`.
 5. Open the Swagger documentation at `http://{host}:8080/api-docs/swagger-ui/index.html#/` to view the API endpoints.
 6. To test the API endpoints, you can use the included Postman collection located at `src/test/resources/ETSTUR_FILE_API.postman_collection.json`.
-7. Note: Due to permission issues, the `files` folder in `C:` should be created like `C:/files/`.
+7. **Note**: Due to permission issues, the `files` folder in `C:` should be created like `C:/files/`.
 
 
 
