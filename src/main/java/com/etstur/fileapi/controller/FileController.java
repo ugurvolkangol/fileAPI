@@ -1,6 +1,6 @@
 package com.etstur.fileapi.controller;
 
-import com.etstur.fileapi.entity.FileEntity;
+import com.etstur.fileapi.model.FileEntity;
 import com.etstur.fileapi.service.FileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

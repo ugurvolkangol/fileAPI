@@ -1,6 +1,6 @@
 package com.etstur.fileapi.repository;
 
-import com.etstur.fileapi.entity.UserEntity;
+import com.etstur.fileapi.model.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

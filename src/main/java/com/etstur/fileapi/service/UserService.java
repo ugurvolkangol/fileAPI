@@ -1,12 +1,12 @@
 package com.etstur.fileapi.service;
 
-import com.etstur.fileapi.entity.UserEntity;
+import com.etstur.fileapi.model.UserEntity;
 import com.etstur.fileapi.repository.UserRepository;
 import com.etstur.fileapi.security.JwtProvider;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,32 +23,26 @@ import org.springframework.stereotype.Service;
 
 // Kullanıcı servis sınıfı
 @Service
+@RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
-    // Kullanıcı repository bağımlılığı
-    @Autowired
-    private UserRepository userRepository;
+  private final UserRepository userRepository;
 
-    // Şifre kodlayıcı bağımlılığı
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+  private final PasswordEncoder passwordEncoder;
 
-    // JWT sağlayıcı bağımlılığı
-    @Autowired
-    private JwtProvider jwtProvider;
+  private final JwtProvider jwtProvider;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+  private final AuthenticationManager authenticationManager;
 
-    // Kullanıcının detaylarını yüklemek için bir metod (Spring Security tarafından kullanılır)
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // Veritabanından kullanıcıyı bul
-        Optional<UserEntity> userOptional = userRepository.findByUsername(username);
-        if (userOptional.isEmpty()) {
-            throw new UsernameNotFoundException("Kullanıcı bulunamadı");
-        }
-        UserEntity userEntity = userOptional.get();
+  // Kullanıcının detaylarını yüklemek için bir metod (Spring Security tarafından kullanılır)
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    // Veritabanından kullanıcıyı bul
+    Optional<UserEntity> userOptional = userRepository.findByUsername(username);
+    if (userOptional.isEmpty()) {
+      throw new UsernameNotFoundException("Kullanıcı bulunamadı");
+    }
+    UserEntity userEntity = userOptional.get();
 
         // Kullanıcının detaylarını dön (Spring Security tarafından tanınan bir sınıf)
         return new User(userEntity.getUsername(), userEntity.getPassword(), getAuthorities(userEntity));

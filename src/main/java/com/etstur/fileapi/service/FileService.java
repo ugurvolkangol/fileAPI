@@ -1,33 +1,32 @@
 package com.etstur.fileapi.service;
 
-import com.etstur.fileapi.entity.FileEntity;
+import com.etstur.fileapi.model.FileEntity;
 import com.etstur.fileapi.repository.FileRepository;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 // Dosya servis sınıfı
 @Service
+@RequiredArgsConstructor
 public class FileService {
 
-    // Dosya repository bağımlılığı
-    @Autowired
-    private FileRepository fileRepository;
+  private final FileRepository fileRepository;
 
-    // Dosyayı kaydetmek için bir metod
-    public FileEntity saveFile(MultipartFile file) throws Exception {
-        // Dosyanın boyutunu kontrol et
-        if (file.getSize() > 5 * 1024 * 1024) {
-            throw new Exception("Dosya boyutu en fazla 5mb olmalı");
-        }
+  // Dosyayı kaydetmek için bir metod
+  public FileEntity saveFile(MultipartFile file) throws Exception {
+    // Dosyanın boyutunu kontrol et
+    if (file.getSize() > 5 * 1024 * 1024) {
+      throw new Exception("Dosya boyutu en fazla 5mb olmalı");
+    }
 
-        // Dosyanın uzantısını kontrol et
-        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+    // Dosyanın uzantısını kontrol et
+    String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         if (!extension.matches("png|jpeg|jpg|docx|pdf|xlsx")) {
             throw new Exception("Dosya uzantısı png, jpeg, jpg, docx, pdf veya xlsx olmalı");
         }
