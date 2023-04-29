@@ -15,13 +15,18 @@ FileAPI is an API that allows us to perform file storage, update and list operat
 + Open API Swagger
 + Maven
 
-## Installation and Running
+## Usage
 
-To install and run your API, use the following commands:
+To use this API, you can follow the steps below:
 
-- mvn clean install
-- mvn spring-boot:run
-- Due to permission issues, the files folder in C should be created like C:/files/ 
+1. Clone the repository to your local machine.
+2. Open the project in your preferred IDE.
+3. Build the project using `mvn clean install`.
+4. Run the project using `mvn spring-boot:run`.
+5. Open the Swagger documentation at `http://{host}:8080/api-docs/swagger-ui/index.html#/` to view the API endpoints.
+6. To test the API endpoints, you can use the included Postman collection located at `src/test/resources/ETSTUR_FILE_API.postman_collection.json`.
+7. Note: Due to permission issues, the `files` folder in `C:` should be created like `C:/files/`.
+
 
 
 ### API Endpoints
