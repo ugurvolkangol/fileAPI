@@ -23,19 +23,23 @@ To install and run your API, use the following commands:
 - mvn spring-boot:run
 - Due to permission issues, the files folder in C should be created like C:/files/ 
 
-## Functions and Usage
 
-Your API provides the following functions:
+### API Endpoints
 
-- User registration: POST http://{host}:8080/users/register {"username" :"username","password":"password","role":"role"}
-- User login: POST http://{host}:8080/users/login {"username" :"username","password":"password"} (returns JWT token)
-- File upload: POST http://{host}:8080/files/upload (content-type: multipart/form-data, body: key=file, value=file)
-- File listing: GET http://{host}:8080/files/list
-- File content retrieval: GET http://{host}:8080/files/content/{id} (returns byteArray)
-- File deletion: DELETE http://{host}:8080/files/delete/{id}
-- File update: PUT http://{host}:8080/files/update/{id} (content-type: multipart/form-data, body: key=file, value=file)
+| HTTP Method | Endpoint                  | Description |
+|-------------|---------------------------|-------------|
+| POST        | /users/register           | User registration with JSON body {"username" :"username","password":"password","role":"role"}. |
+| POST        | /users/login              | User login with JSON body {"username" :"username","password":"password"} (returns JWT token). |
+| POST        | /files/upload             | File upload with content-type multipart/form-data and body key file with value as the file. |
+| GET         | /files/list               | File listing. |
+| GET         | /files/content/{id}       | File content retrieval where {id} is the ID of the file (returns file as byteArray). |
+| DELETE      | /files/delete/{id}        | File deletion where {id} is the ID of the file. |
+| PUT         | /files/update/{id}        | File update with content-type multipart/form-data and body key file with value as the updated file, where {id} is the ID of the file. |
 
-Note: To access file operations, you need to add Bearer JWT token to the authorization header.
+### Note
+
+To access file operations, you need to add the JWT token received from the /users/login endpoint to the authorization header.
+
 
 ## Documentation
 
