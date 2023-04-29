@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -31,8 +32,8 @@ public class JwtFilter extends OncePerRequestFilter {
   // Her istek için filtreleme yapmak için bir metod (Spring Security tarafından çağrılır)
   @Override
   protected void doFilterInternal(
-      HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-      throws ServletException, IOException {
+          HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+          throws ServletException, IOException {
     // İstekten JWT tokenini al
     String token = jwtProvider.getTokenFromRequest(request);
     try {
@@ -46,14 +47,18 @@ public class JwtFilter extends OncePerRequestFilter {
 
         // Kullanıcının kimliğini doğrula (Spring Security tarafından yapılır)
         UsernamePasswordAuthenticationToken authentication =
-            new UsernamePasswordAuthenticationToken(
-                userDetails, null, userDetails.getAuthorities());
+                new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         // Filtre zincirine devam et
       }
     } catch (InvalidTokenException e) {
       // Token geçersiz ise buraya girer
+      handlerExceptionResolver.resolveException(request, response, null, e);
+      return;
+    }catch (UsernameNotFoundException e) {
+      // User bulunamadıysa ise buraya girer
       handlerExceptionResolver.resolveException(request, response, null, e);
       return;
     }

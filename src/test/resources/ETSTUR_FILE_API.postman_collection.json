@@ -23,7 +23,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"volkan\",\r\n    \"password\": \"uvg731\",\r\n    \"role\" : \"ADMIN\"\r\n}",
+							"raw": "{\r\n    \"username\": \"volkan\",\r\n    \"password\": \"test123\",\r\n    \"role\" : \"ADMIN\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -52,7 +52,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"volkan\",\r\n    \"password\": \"uvg731\"\r\n}",
+							"raw": "{\r\n    \"username\": \"volkan\",\r\n    \"password\": \"test123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

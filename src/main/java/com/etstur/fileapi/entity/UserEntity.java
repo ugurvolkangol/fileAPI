@@ -18,7 +18,7 @@ public class UserEntity {
     private Long id;
 
     // Kullanıcı adı
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     // Kullanıcı şifresi
