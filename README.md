@@ -10,7 +10,8 @@ FileAPI is an API that allows us to perform file storage, update and list operat
 + Spring Data JPA
 + Spring Actuator
 + Lombok
-+ H2 DB 
++ H2 DB
++ JUnit and Mockito
 + Open API Swagger
 + Maven
 
